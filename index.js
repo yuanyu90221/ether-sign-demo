@@ -3,7 +3,6 @@ const rlp = require('rlp');
 const Ec = require('elliptic').ec;
 const ec = new Ec('secp256k1');
 const bluebird = require('bluebird');
-// const compile = require('./contract-comiple-test');
 // gen Key pair
 const keys = ec.genKeyPair();
 // console.log(keys.priv.toString('hex'));
@@ -28,7 +27,7 @@ getAccounts().then((result)=>{
 const util = require('ethereumjs-util');
 const tx = require('ethereumjs-tx');
 // setup private key
-// let privateKey = '0xc0dec0dec0dec0dec0dec0dec0dec0dec0dec0dec0dec0dec0dec0dec0dec0de';
+let privateKey = '0xc0dec0dec0dec0dec0dec0dec0dec0dec0dec0dec0dec0dec0dec0dec0dec0de';
 // console.log(`privateKey: ${privateKey}`);
 // derived public key
 // let publicKey = util.bufferToHex(util.privateToPublic(privateKey));
@@ -59,17 +58,16 @@ function getTxCountFromAddress(address) {
 getGasPrice().then((gas)=>{
   let rawTx = {
     nonce: '0x'+paddingZero(Number(13).toString(16)),
-    gasPrice: '0x'+paddingZero(gas),
-    gasLimit: '0x'+ paddingZero(Number(21210).toString(16)),
+    gasPrice: '0x'+paddingZero(0),
+    gasLimit: '0x'+ paddingZero(Number(25765).toString(16)),
     from: '0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e',
     to: '0x0002cC6A7ceC1276E76a76385ad78a76e619dC49',
-    v: '0x01',
     value: '0x'+paddingZero(Number(2000000000000000000).toString(16))
   };
   // console.log(`rawTx:`,rawTx);
   // console.log(gas.toString(10));
   // sign data
-  // let p = new Buffer(`${privateKey.substr(2)}`,'hex');
+  let p = new Buffer(`${privateKey.substr(2)}`,'hex');
   // let transaction = new tx(rawTx);
   // transaction.sign(p);
   let arrBuf = putDataIntoBufferArray(rawTx);
@@ -83,11 +81,14 @@ getGasPrice().then((gas)=>{
   rawTx.r = `0x${signedResult.r.toString(16)}`;
   rawTx.s = `0x${signedResult.s.toString(16)}`;
   console.log(rawTx);
+  // let transaction = new tx(rawTx);
+  // transaction.sign(keys.priv.toString('hex'));
   // arrBuf = putDataIntoBufferArray(rawTx);
   // signResult = rlp.encode(arrBuf);
   // let rawTxData = keys.sign(signResult);
-  console.log(`0x${Buffer.from(rawTxData.toDER()).toString('hex')}`)
-  // web3.eth.sendSignedTransaction(`0x${Buffer.from(rawTxData.toDER()).toString('hex')}`, function(err, hash) {
+  // console.log(rawTxData);
+  // console.log(`0x${Buffer.from(rawTxData.toDER()).toString('hex')}`)
+  // web3.eth.sendSignedTransaction(`0x${transaction.serialize().toString('hex')}`, function(err, hash) {
   //   if(err) {
   //     console.log(err);
   //     return;
@@ -95,25 +96,25 @@ getGasPrice().then((gas)=>{
   //   console.log(`test send raw transaction tx:${hash}`);  
   // });
   // sender = '0x0002cC6A7ceC1276E76a76385ad78a76e619dC49'
-  // web3.eth.signTransaction({
-  //   from: '0x0002cC6A7ceC1276E76a76385ad78a76e619dC49',
-  //   gasPrice: gas.toString(10),
-  //   gas: "21200",
-  //   to: '0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e',
-  //   value: "2000000000000000000",
-  //   data: "0x"
-  // }).then((result)=> {
-  //   console.log(result.tx);
-  //   web3.eth.sendSignedTransaction(result.raw, (err, hash)=> {
-  //     if (err) {
-  //       console.log(err);
-  //       return;
-  //     }
-  //     console.log(`test send raw transaction tx:${hash}`);
-  //     // process.exit(0);
-  //     console.log(`final transaction`);    
-  //   })
-  // });
+  web3.eth.signTransaction({
+    from: '0x0002cC6A7ceC1276E76a76385ad78a76e619dC49',
+    gasPrice: gas.toString(10),
+    gas: "21200",
+    to: '0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e',
+    value: "2000000000000000000",
+    data: "0x"
+  }).then((result)=> {
+    console.log(result.tx);
+    web3.eth.sendSignedTransaction(result.raw, (err, hash)=> {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      console.log(`test send raw transaction tx:${hash}`);
+      // process.exit(0);
+      console.log(`final transaction`);    
+    })
+  });
 })
 
 // encodeTx
