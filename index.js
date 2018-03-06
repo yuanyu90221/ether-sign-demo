@@ -35,12 +35,12 @@ let privateKey = '0xc0dec0dec0dec0dec0dec0dec0dec0dec0dec0dec0dec0dec0dec0dec0de
 // get address from public key last 160 bit
 // let address = `0x${util.bufferToHex(util.sha3(publicKey)).slice(26)}`;
 // console.log(`address: ${address}`);
-// web3.eth.estimateGas({
-//   to: '0x0002cC6A7ceC1276E76a76385ad78a76e619dC49',
-//   data: '0xc0de'
-// }).then((gas)=> {
-//   console.log(gas);  
-// });
+web3.eth.estimateGas({
+  from: '0x0002cC6A7ceC1276E76a76385ad78a76e619dC49',
+  data: '0x0002cC6A7ceC'
+}).then((gas)=> {
+  console.log(`current gas`,gas);
+});
 // web3.eth.getTransactionCount("0x0002cC6A7ceC1276E76a76385ad78a76e619dC49").then((number)=>{
 //   console.log(`current count: `, number);
 // })
@@ -101,7 +101,7 @@ getGasPrice().then((gas)=>{
     gasPrice: gas.toString(10),
     gas: "21200",
     to: '0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e',
-    value: "2000000000000000000",
+    value: "300000000000000000",
     data: "0x"
   }).then((result)=> {
     console.log(result.tx);
