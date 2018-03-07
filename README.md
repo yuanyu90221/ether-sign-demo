@@ -42,10 +42,10 @@
 2 Sign Raw Transaction
 
 ```code
-  無論SignTransaction或是deployContract均需要
-  先用web3.eth.estimateGas 估計 gasLimit發送transaction
+  無論SignTransaction或是deployContract均需要
+  先用web3.eth.estimateGas估計gasLimit發送transaction
   而deployContract還需要
-  利用 web3.eth.getGasPrice來估計GasPrice來發送Transaction
+  利用web3.eth.getGasPrice來估計GasPrice來發送Transaction
 ```
 
   以下是發送Raw Transaction的範例
