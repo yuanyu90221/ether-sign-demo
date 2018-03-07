@@ -4,10 +4,8 @@
 
 ```code
   // need to use web3.eth.Contract Object
-  
   // Contract Object
   const contract = new web3.eth.Contract(abi);
-
   // Deploy Method
   contract.deploy({
       data: `0x` + bytecode
@@ -32,7 +30,6 @@
           // console.log(receipt);
           ContractDeployed.methods.getValue().call().then(console.log);
         })
-        
       }
     }).then((newContractInstance)=> {    
     })
