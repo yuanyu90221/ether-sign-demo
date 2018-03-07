@@ -3,7 +3,7 @@
 1 Deploy Smart Contract
 
 ```code
-  need to use web3.eth.Contract Object
+  // need to use web3.eth.Contract Object
   
   // Contract Object
   const contract = new web3.eth.Contract(abi);
