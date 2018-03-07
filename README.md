@@ -48,7 +48,7 @@
   利用 web3.eth.getGasPrice來估計GasPrice來發送Transaction
 ```
 
-  以下是發送Raw Transaction的範例
+  以下是發送Raw Transaction的範例
 
 ```code
 getGasPrice().then((gas)=>{
